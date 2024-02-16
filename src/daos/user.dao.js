@@ -16,7 +16,7 @@ class UserDAO{
         return await this.User.findOne({
             limit: 1,
             where: {
-                id,
+                id
             }
         });
     }
@@ -26,15 +26,30 @@ class UserDAO{
             attributes: ['salt', 'password'],
             limit: 1,
             where: {
-                username,
+                username
             }
-        })
+        });
     }
 
     async createUser(data){
-        return await this.User.create(data)
+        return await this.User.create(data);
     }
 
+    async deleteUser(id){
+        return await this.User.destroy({
+            where: {
+                id
+            }
+        });
+    }
+
+    async updateUser(id, data){
+        return await this.User.update(data,{
+            where: {
+                id
+            }
+        });
+    }
 }
 
 const userDao = new UserDAO(User);

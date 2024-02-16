@@ -15,6 +15,14 @@ class UserService {
         return await this.userDao.getUserById(id)
     }
 
+    async deleteUser(id){
+        return await this.userDao.deleteUser(id)
+    }
+
+    async updateUser(id, data){
+        return await this.userDao.updateUser(id, data)
+    }
+
 }
 
 const userService = new UserService(userDao)
