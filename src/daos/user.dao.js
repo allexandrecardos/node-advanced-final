@@ -1,4 +1,4 @@
-const { User } = require('../models/index');
+const { User, Products } = require('../models/index');
 
 class UserDAO{
 
@@ -17,13 +17,17 @@ class UserDAO{
             limit: 1,
             where: {
                 id
-            }
+            },
+            include:[{
+                model: Products,
+                attributes: ['id', 'name', 'price']
+            }]
         });
     }
 
     async getUserByUsername(username){
         return await this.User.findOne({
-            attributes: ['salt', 'password'],
+            attributes: ['id', 'salt', 'password'],
             limit: 1,
             where: {
                 username
