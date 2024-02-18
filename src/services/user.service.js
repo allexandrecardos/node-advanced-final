@@ -8,23 +8,28 @@ class UserService {
     }
 
     async getAllUser(){
-        return await this.userDao.getAllUser()
+        return await this.userDao.getAllUser();
     }
 
     async getUserById(id){
-        return await this.userDao.getUserById(id)
+        return await this.userDao.getUserById(id);
     }
 
     async deleteUser(id){
-        return await this.userDao.deleteUser(id)
+        return await this.userDao.deleteUser(id);
     }
 
     async updateUser(id, data){
-        return await this.userDao.updateUser(id, data)
+        return await this.userDao.updateUser(id, data);
+    }
+
+    async userIsAdmin(id){
+        const user = await this.userDao.getUserById(id);
+        return user.admin; 
     }
 
 }
 
-const userService = new UserService(userDao)
+const userService = new UserService(userDao);
 
 module.exports = userService;

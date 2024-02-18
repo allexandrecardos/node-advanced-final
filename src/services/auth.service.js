@@ -1,26 +1,25 @@
 // AuthService.js
+const Service = require('./service')
 const userDao = require('../daos/user.dao');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-class AuthService {
+class AuthService extends Service{
 
     constructor(userDao) {
+        super()
         this.userDao = userDao;
     }
 
     async registerUser(data) {
-        const { username, email, password } = data;
+        await this.isValidRequestUser(data)
 
         const salt = await this.genSalt(10);
-        const hash = await this.genHash(password, salt);
+        const hash = await this.genHash(data.password, salt);
 
-        return await this.userDao.createUser({
-            username,
-            email,
-            salt,
-            password: hash,
-        })
+        data.salt = salt;
+        data.password = hash;
+
+        return await this.userDao.createUser(data)
     }
 
     async genSalt(saltRounds) {
@@ -32,7 +31,10 @@ class AuthService {
     }
 
     async loginUser(data) {
+        await this.isValidRequestLogin(data)
+
         const { username, password } = data;
+        
         const user = await this.userDao.getUserByUsername(username);
 
         if(!user){
@@ -45,7 +47,7 @@ class AuthService {
             
         }
 
-        return await this.genToken(username, user.salt);
+        return await this.genToken(user.id, process.env.JWT_SECRET);
     }
 
     async comparePassword(password, userPassword) {
@@ -53,9 +55,10 @@ class AuthService {
     }
 
     async genToken(tokenSecret, tokenPrivate){
-        return jwt.sign({tokenSecret}, tokenPrivate, { expiresIn: '1h' }, { algorithm: 'RS256' });
+        return jwt.sign({
+            userId: tokenSecret,
+        }, tokenPrivate, { expiresIn: '1h' }, { algorithm: 'RS256' });
     }
-
 }
 
 const authService = new AuthService(userDao)
