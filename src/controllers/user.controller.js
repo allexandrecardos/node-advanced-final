@@ -1,8 +1,10 @@
 //user.controller.js
+const Controller = require('./controller')
 const userService =  require("../services/user.service")
 
-class UserController {
+class UserController extends Controller{
     constructor(userService) {
+        super();
         this.userService = userService;
     }
 
@@ -35,6 +37,9 @@ class UserController {
 
     async updateUser(req, res){
         try{
+
+            const data = this.getBody()
+
             const user = await this.userService.updateUser(req.params.id, req.body)
             res.status(200).json(user)
         }catch(err){
