@@ -33,13 +33,13 @@ class UserService extends Service{
 
         await this.isResponseExists(user, 'User not found');
 
-        if(data.hasOwnProperty('password')){
+        if('password' in data){
             user.password = await this.updatePassword(data.password, user.salt);
         }
 
-        user.save();
+        const updateUser = await this.userDao.updateUSer(user.id, data);
 
-        return user;
+        return updateUser;
     }
 
     async userIsAdmin(id){
