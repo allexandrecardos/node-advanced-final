@@ -7,12 +7,12 @@ require('./src/utils/schemas');
 const express = require('express');
 const multer = require('multer');
 const morgan = require('morgan');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 
 //middlewares
-const jwtMiddleware = require('./src/middlewares/token.middleware')
-const authorizationMiddleware = require('./src/middlewares/authorization.middleware')
-
+const jwtMiddleware = require('./src/middlewares/token.middleware');
+const authorizationMiddleware = require('./src/middlewares/authorization.middleware');
+const requestMiddleware = require('./src/middlewares/request.middleware');
 //routes
 const authRoutes = require("./src/routes/auth.routes");
 const userRoutes = require("./src/routes/user.routes");
@@ -37,6 +37,7 @@ app.use(morgan('common'));
 
 app.use(cookieParser())
 
+app.use(requestMiddleware)
 app.use(['/users', '/products'], jwtMiddleware, authorizationMiddleware)
 
 app.use('/auth', authRoutes);
