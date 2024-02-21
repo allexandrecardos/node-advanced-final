@@ -7,7 +7,7 @@
     "test": "",
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "project": "npm install && docker compose up -d && npx sequelize-cli db:migrate"
+    "project": "npm install && copy .env.example .env && docker compose up -d && npx sequelize-cli db:migrate"
   },
   "keywords": [],
   "author": "",
