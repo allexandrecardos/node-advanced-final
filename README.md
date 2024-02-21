@@ -21,6 +21,11 @@ Este projeto consiste na criação de uma API RESTful.
 **RNF05: Estrutura da API**
 - A estrutura da API deve seguir boas práticas de organização de código, incluindo diretórios para controllers, rotas, configurações de banco de dados, middlewares, etc. O projeto deve utilizar um arquivo **.env** para configurar variáveis de ambiente.
 
+## Requisitos Funcionais
+
+**RF01: Permissão de Administrador**
+- Apenas usuários *admin* conseguem deletar ou atualizar um registro, para a criação de produtos também é necessário ser um administrador.
+
 ## Tecnologias Utilizadas
 - JavaScript
 - Node.js
@@ -34,7 +39,9 @@ Este projeto consiste na criação de uma API RESTful.
   git clone https://github.com/allexandrecardos/node-advanced-final.git
 ```
 
-2. Certifique-se de configurar corretamente o arquivo **.env** com as variáveis de ambiente necessárias, como informações de conexão com o banco de dados e chaves JWT.<br>
+2. Certifique-se de ter o [NodeJS](https://nodejs.org/en/download/current) instalado. 
+
+3. Certifique-se de configurar corretamente o arquivo **.env** com as variáveis de ambiente necessárias, como informações de conexão com o banco de dados e chaves JWT.<br>
 **Obs: Caso não tenha o arquivo, crie e cole as variáveis abaixo.**
 ```bash
   APP_PORT=3000
@@ -47,14 +54,14 @@ Este projeto consiste na criação de uma API RESTful.
   DB_DIALECT=postgres
 ```
 
-3. Certifique-se de ter o [Docker](https://www.docker.com/get-started/) instalado.
+4. Certifique-se de ter o [Docker](https://www.docker.com/get-started/) instalado e rodando no seu ambiente.
 
-4. Instale as dependências do projeto usando um script personalizado.
+5. Instale as dependências do projeto usando um script personalizado.
 ```bash
   npm run project
 ```
 
-5. A API estará disponível para acesso em http://localhost:3000 (ou outra porta, dependendo da configuração).
+6. A API estará disponível para acesso em http://localhost:3000 (ou outra porta, dependendo da configuração).
 
 ## Documentação da API - Rotas
 
@@ -73,7 +80,7 @@ Este projeto consiste na criação de uma API RESTful.
 
 ___
 
-### Registar um usuário
+### Logar um usuário
 
 ```http
   POST /auth/login
@@ -86,7 +93,7 @@ ___
 
 ___
 
-### Registar um usuário
+### Deslogar um usuário
 
 ```http
   GET /auth/logout
