@@ -11,31 +11,31 @@ class ProductService extends Service{
 
     async createProduct(data){
         const product = await this.productDao.createProduct(data);
-        this.isResponseExists(product);
+        await this.isResponseExists(product, 'Product not found!');
         return product;
     }
 
     async getAllProducts(){
         const product = await this.productDao.getAllProducts();
-        this.isResponseExists(product);
+        await this.isResponseExists(product, 'Product not found!');
         return product;
     }
 
     async getProductById(id){
         const product = await this.productDao.getProductById(id);
-        this.isResponseExists(product);
+        await this.isResponseExists(product, 'Product not found!');
         return product;
     }
 
     async deleteProduct(id){
         const product = await this.productDao.deleteProduct(id);
-        this.isResponseExists(product);
+        await this.isResponseExists(product, 'Product not found!');
         return product;
     }
 
     async updateProduct(id, data){
         const product = await this.productDao.updateProduct(id, data);
-        this.isResponseExists(product);
+        await this.isResponseExists(product, 'Product not found!');
         return product;
     }
 

@@ -34,7 +34,7 @@ class UserService extends Service{
         await this.isResponseExists(user, 'User not found');
 
         if('password' in data){
-            user.password = await this.updatePassword(data.password, user.salt);
+            data.password = await this.updatePassword(data.password, user.salt);
         }
 
         const updateUser = await this.userDao.updateUSer(user.id, data);
