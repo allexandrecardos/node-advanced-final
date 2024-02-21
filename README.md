@@ -56,12 +56,27 @@ Este projeto consiste na criação de uma API RESTful.
 
 4. Certifique-se de ter o [Docker](https://www.docker.com/get-started/) instalado e rodando no seu ambiente.
 
-5. Instale as dependências do projeto usando um script personalizado.
+5. Instale as dependências do projeto.
 ```bash
-  npm run project
+  npm install
 ```
 
-6. A API estará disponível para acesso em http://localhost:3000 (ou outra porta, dependendo da configuração).
+6. Execute o comando docker para subir o banco de dados (PostgreSQL).
+```bash
+  docker compose up -d
+```
+
+7. Crie as tabelas pelo sequelize-cli (migrations).
+```bash
+  npx sequelize-cli db:migrate
+```
+
+8. Inicie a aplicação.
+```bash
+  npm run dev
+```
+
+9. A API estará disponível para acesso em http://localhost:3000 (ou outra porta, dependendo da configuração).
 
 ## Documentação da API - Rotas
 
