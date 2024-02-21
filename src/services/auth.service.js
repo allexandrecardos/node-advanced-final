@@ -1,4 +1,4 @@
-// AuthService.js
+// auth.service.js
 const Service = require('./service')
 const userDao = require('../daos/user.dao');
 const bcrypt = require('bcrypt');
@@ -38,13 +38,13 @@ class AuthService extends Service{
         const user = await this.userDao.getUserByUsername(username);
 
         if(!user){
-            
+            throw new Error('User not found!');
         }
 
-        const match = this.comparePassword(password, user.password)
+        const match = await this.comparePassword(password, user.password)
 
         if (!match) {
-            
+            throw new Error('Credentials Invalid!');
         }
 
         return await this.genToken(user.id, process.env.JWT_SECRET);
