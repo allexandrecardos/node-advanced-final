@@ -1,18 +1,16 @@
 //auth.controller.js
-const Controller = require('./controller')
+
 const authService =  require("../services/auth.service")
 
-class AuthController extends Controller{
+class AuthController{
 
     constructor(authService) {
-        super()
         this.authService = authService;
     }
 
     async registerUser(req, res) {
         try {
-            const data = await this.isBodyValid(req.body)
-            const user = await this.authService.registerUser(data);
+            const user = await this.authService.registerUser(req.body);
             res.status(201).json({
                 message: 'User created successful!',
                 user,
@@ -24,8 +22,7 @@ class AuthController extends Controller{
 
     async loginUser(req, res){
         try {
-            const data = await this.isBodyValid(req.body)
-            const token = await this.authService.loginUser(data);
+            const token = await this.authService.loginUser(req.body);
             res.cookie("accessToken", token).status(200).json({ message: 'Login successful!' })
         } catch (err) {
             res.status(500).json({message: 'Fatal Error!', error: err.message});
@@ -35,7 +32,7 @@ class AuthController extends Controller{
     async logoutUser(req, res){
         try {
             if(!req.cookies.accessToken){
-                
+                return res.status(401).json({ message: 'User not authenticated!' });
             }
 
             res.clearCookie("accessToken").status(200).json({ message: 'Logout successful!' })

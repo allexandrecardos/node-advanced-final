@@ -1,11 +1,8 @@
 //product.controller.js
-const Controller = require('./controller')
 const productService =  require("../services/product.service")
-const jwt = require('jsonwebtoken');
 
-class ProductController extends Controller{
+class ProductController{
     constructor(productService) {
-        super();
         this.productService = productService;
     }
 

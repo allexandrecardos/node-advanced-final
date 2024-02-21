@@ -1,49 +1,44 @@
 //user.controller.js
-const Controller = require('./controller')
 const userService =  require("../services/user.service")
 
-class UserController extends Controller{
+class UserController{
     constructor(userService) {
-        super();
         this.userService = userService;
     }
 
     async getAllUser(req, res){
         try{
-            const user = await this.userService.getAllUser()
-            res.status(200).json(user)
+            const user = await this.userService.getAllUser();
+            res.status(200).json({ user: user});
         }catch(err){
-            console.log(err);
+            res.status(500).json({ message: 'Fatal Error!', error: err.message});
         }
     }
 
     async getUserById(req, res){
         try{
             const user = await this.userService.getUserById(req.params.id)
-            res.status(200).json(user)
+            res.status(200).json({ user: user})
         }catch(err){
-            console.log(err);
+            res.status(500).json({ message: 'Fatal Error!', error: err.message});
         }
     }
 
     async deleteUser(req, res){
         try{
-            const user = await this.userService.deleteUser(req.params.id)
-            res.status(200).json(user)
+            await this.userService.deleteUser(req.params.id)
+            res.status(200).json({ message: 'User deleted successful!'})
         }catch(err){
-            console.log(err);
+            res.status(500).json({ message: 'Fatal Error!', error: err.message});
         }
     }
 
     async updateUser(req, res){
         try{
-
-            const data = this.getBody()
-
             const user = await this.userService.updateUser(req.params.id, req.body)
-            res.status(200).json(user)
+            res.status(200).json({ message: 'User updated successful!'})
         }catch(err){
-            console.log(err);
+            res.status(500).json({ message: 'Fatal Error!', error: err.message});
         }
     }
    
