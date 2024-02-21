@@ -20,6 +20,12 @@ class Service {
         const schema = Service.getSchema('requestLogin');
         schema.validateSync(data);
     }
+
+    async isResponseExists(response, message){
+        if(!response){
+            throw new Error(message);
+        }
+    }
 }
 
 module.exports = Service;

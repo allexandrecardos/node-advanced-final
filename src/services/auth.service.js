@@ -3,15 +3,16 @@ const Service = require('./service')
 const userDao = require('../daos/user.dao');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
 class AuthService extends Service{
 
     constructor(userDao) {
-        super()
+        super();
         this.userDao = userDao;
     }
 
     async registerUser(data) {
-        await this.isValidRequestUser(data)
+        await this.isValidRequestUser(data);
 
         const salt = await this.genSalt(10);
         const hash = await this.genHash(data.password, salt);
@@ -19,7 +20,7 @@ class AuthService extends Service{
         data.salt = salt;
         data.password = hash;
 
-        return await this.userDao.createUser(data)
+        return await this.userDao.createUser(data);
     }
 
     async genSalt(saltRounds) {
@@ -41,7 +42,7 @@ class AuthService extends Service{
             throw new Error('User not found!');
         }
 
-        const match = await this.comparePassword(password, user.password)
+        const match = await this.comparePassword(password, user.password);
 
         if (!match) {
             throw new Error('Credentials Invalid!');
@@ -51,7 +52,7 @@ class AuthService extends Service{
     }
 
     async comparePassword(password, userPassword) {
-        return bcrypt.compareSync(password, userPassword)
+        return bcrypt.compareSync(password, userPassword);
     }
 
     async genToken(tokenSecret, tokenPrivate){

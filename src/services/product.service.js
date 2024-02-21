@@ -1,30 +1,42 @@
 // user.service.js
+const Service = require('./service');
 const productDao = require('../daos/product.dao');
 
-class ProductService {
+class ProductService extends Service{
 
     constructor(productDao) {
+        super();
         this.productDao = productDao;
     }
 
     async createProduct(data){
-        return await this.productDao.createProduct(data);
+        const product = await this.productDao.createProduct(data);
+        this.isResponseExists(product);
+        return product;
     }
 
     async getAllProducts(){
-        return await this.productDao.getAllProducts();
+        const product = await this.productDao.getAllProducts();
+        this.isResponseExists(product);
+        return product;
     }
 
     async getProductById(id){
-        return await this.productDao.getProductById(id);
+        const product = await this.productDao.getProductById(id);
+        this.isResponseExists(product);
+        return product;
     }
 
     async deleteProduct(id){
-        return await this.productDao.deleteProduct(id);
+        const product = await this.productDao.deleteProduct(id);
+        this.isResponseExists(product);
+        return product;
     }
 
     async updateProduct(id, data){
-        return await this.productDao.updateProduct(id, data);
+        const product = await this.productDao.updateProduct(id, data);
+        this.isResponseExists(product);
+        return product;
     }
 
 }
